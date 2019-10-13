@@ -1,0 +1,12 @@
+#!/bin/sh
+
+vax-linux-gcc -O2 -c start.S main.cpp &&
+vax-linux-ld -z max-page-size=512 -Ttext=0x0 start.o main.o -o loop &&
+vax-linux-objdump -dC loop > loop.lst &&
+vax-linux-objdump -xC loop > loop.dump &&
+vax-linux-objcopy -O binary loop loop.bin &&
+cc -Wall mkmopheader.c -o mkmopheader &&
+./mkmopheader loop.bin loop.mop &&
+cp loop.mop /tftpboot/mop/boot &&
+hexdump -Cv loop.mop > loop.mop.hex
+
