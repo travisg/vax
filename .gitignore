@@ -1,0 +1,15 @@
+*.swp
+*~
+*.o
+*.d
+*.orig
+*.bin
+*.lst
+*.mop
+*.dump
+*.hex
+tags
+TAGS
+cscope.out
+build
+compile_commands.json
