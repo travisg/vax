@@ -62,20 +62,45 @@ void puthex(T val) {
     }
 }
 
+void dump_pr(const char *name, int reg) {
+    putstr(name);
+    putstr(": ");
+    puthex(mfpr(reg));
+    putchar('\n');
+}
+#define dump_pr_byname(name) \
+    dump_pr(#name, PR_##name)
+
 extern "C"
 void _main(void) {
-    putchar('c');
+    puts("\n\nhello world");
 
-    puts("hello world");
+    dump_pr_byname(SID);
 
-    putstr("SID ");
-    puthex(mfpr(PR_SID));
-    putchar('\n');
-
-    putstr("SIE ");
+    putstr("SIE: ");
     puthex(*(unsigned int *)0x20040004); // SIE address on a lot of machines
     putchar('\n');
 
+    dump_pr_byname(KSP);    /* Kernel Stack Pointer */
+    dump_pr_byname(ESP);    /* Executive Stack Pointer */
+    dump_pr_byname(SSP);    /* Supervisor Stack Pointer */
+    dump_pr_byname(USP);    /* User Stack Pointer */
+    dump_pr_byname(ISP);    /* Interrupt Stack Pointer */
+
+    dump_pr_byname(P0BR);   /* P0 Base Register */
+    dump_pr_byname(P0LR);   /* P0 Length Register */
+    dump_pr_byname(P1BR);   /* P1 Base Register */
+    dump_pr_byname(P1LR);   /* P1 Length Register */
+    dump_pr_byname(SBR);    /* System Base Register */
+    dump_pr_byname(SLR);    /* System Limit Register */
+
+    dump_pr_byname(PCBB);   /* Process Control Block Base */
+    dump_pr_byname(SCBB);   /* System Control Block Base */ 
+    dump_pr_byname(IPL);    /* Interrupt Priority Level */
+
+    dump_pr_byname(MAPEN);  /* Memory Management Enable */
+
+    puts("boot args:");
     for (int i = 0; i < 13; i++) {
         puthex(bootargs[i]);
         putchar('\n');

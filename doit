@@ -1,7 +1,7 @@
 #!/bin/sh
 
 vax-linux-gcc -O2 -c start.S main.cpp &&
-vax-linux-ld -z max-page-size=512 -Ttext=0x0 start.o main.o -o loop &&
+vax-linux-ld -z max-page-size=512 -Ttext=0x100000 start.o main.o -o loop &&
 vax-linux-objdump -dC loop > loop.lst &&
 vax-linux-objdump -xC loop > loop.dump &&
 vax-linux-objcopy -O binary loop loop.bin &&
