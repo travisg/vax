@@ -1,0 +1,7 @@
+set cpu 32m
+set console brk=10
+attach xq eth1
+expect " (1..15): " send "5\r"; go
+expect ">>>" send "boot xqa0\r"; go
+boot
+
